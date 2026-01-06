@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>Photo Card Generator</title>
-    <meta name="description" content="OSPranto Tech-এর ফটো কার্ড জেনারেটর দিয়ে সহজেই সুন্দর এবং প্রফেশনাল ফটো কার্ড তৈরি করো।">
+    <meta name="description" content="OSPranto Tech-এর ফটো কার্ড জেনারেটর দিয়ে সহজেই সুন্দর এবং প্রফেশনাল ফটো কার্ড তৈরি করো।">
     
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://photocard-meme.vercel.app">
@@ -18,6 +18,55 @@
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Merriweather:wght@400;700&family=Noto+Sans+Bengali:wght@400;600&family=Noto+Serif+Bengali:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Roboto:wght@400;500;700&family=Baloo+Da+2:wght@400;500;600;700&family=Mina:wght@400;700&family=Galada&family=Anek+Bangla:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Lato:wght@400;700&family=Montserrat:wght@400;600;700&family=Oswald:wght@400;500;700&family=Lora:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
     <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Neon Effect for Title */
+        .neon-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+            margin: 0;
+            text-shadow: 
+                0 0 7px #fff,
+                0 0 10px #fff,
+                0 0 21px #ff0055,
+                0 0 42px #ff0055;
+            animation: pulse-red 2s infinite alternate;
+        }
+
+        /* Neon Effect for Powered By text */
+        .neon-subtitle {
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+            margin-top: 5px;
+            letter-spacing: 1px;
+            text-shadow: 
+                0 0 5px #fff,
+                0 0 10px #00d4ff,
+                0 0 20px #00d4ff;
+            animation: pulse-blue 2s infinite alternate;
+        }
+
+        @keyframes pulse-red {
+            from { text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #ff0055; }
+            to { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #ff0055, 0 0 70px #ff0055; }
+        }
+
+        @keyframes pulse-blue {
+            from { text-shadow: 0 0 5px #fff, 0 0 10px #00d4ff; }
+            to { text-shadow: 0 0 8px #fff, 0 0 15px #00d4ff, 0 0 30px #00d4ff; }
+        }
+
+        /* Sidebar adjustment for neon effect visibility */
+        .sidebar-header {
+            padding: 20px;
+            background: #111; /* Dark background make neon pop! */
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 </head>
@@ -33,10 +82,10 @@
         <aside class="sidebar">
             <div class="sidebar-header">
                 <div>
-                    <h1>Photo Card Generator</h1>
-                    <p>Powered by OSPranto Tech</p>
+                    <h1 class="neon-title">Photo Card Generator</h1>
+                    <p class="neon-subtitle">Powered by OSPranto Tech</p>
                 </div>
-                <div style="display: flex; gap: 8px; align-items: center;">
+                <div style="display: flex; gap: 8px; align-items: center; margin-top: 10px;">
                     <button id="themeToggle" class="theme-toggle" title="Toggle dark mode">
                         <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="5"/>
@@ -65,8 +114,7 @@
                 </div>
 
                 <div class="section-title">Content</div>
-                <div id="dynamicContent">
-                    </div>
+                <div id="dynamicContent"></div>
 
                 <div class="section-title">Media</div>
                 <div class="control-group">
@@ -159,8 +207,7 @@
         
         <main class="preview-area">
             <div class="canvas-wrapper">
-                <div id="renderTarget">
-                    </div>
+                <div id="renderTarget"></div>
             </div>
             <div class="zoom-controls">
                 <span class="zoom-hint">Preview scaled to fit. Output is 1080x1080.</span>
