@@ -10,243 +10,215 @@
     </script>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Photo Card Generator | OSPranto Tech</title>
+    <title>Photo Card Generator</title>
+    <meta name="description" content="OSPranto Tech-এর ফটো কার্ড জেনারেটর দিয়ে সহজেই সুন্দর এবং প্রফেশনাল ফটো কার্ড তৈরি করো।">
     
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://photocard-meme.vercel.app">
+    <meta property="og:title" content="OSPranto Tech - Photo Card Generator">
+    <meta property="og:description" content="Create beautiful photo cards easily with OSPranto Tech.">
+    <meta property="og:image" content="https://photocard-meme.vercel.app/preview.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Merriweather:wght@400;700&family=Noto+Sans+Bengali:wght@400;600&family=Noto+Serif+Bengali:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Roboto:wght@400;500;700&family=Baloo+Da+2:wght@400;500;600;700&family=Mina:wght@400;700&family=Galada&family=Anek+Bangla:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Lato:wght@400;700&family=Montserrat:wght@400;600;700&family=Oswald:wght@400;500;700&family=Lora:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
     <link rel="stylesheet" href="style.css">
     
     <style>
-        /* Mobile-First & Responsive CSS */
-        :root {
-            --sidebar-width: 350px;
-            --neon-pink: #ff0055;
-            --neon-blue: #00d4ff;
-        }
-
-        body {
+        /* Neon Effect for Title */
+        .neon-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
             margin: 0;
-            font-family: 'Poppins', 'Hind Siliguri', sans-serif;
-            overflow-x: hidden;
-            background: #f0f2f5;
+            text-shadow: 
+                0 0 7px #fff,
+                0 0 10px #fff,
+                0 0 21px #ff0055,
+                0 0 42px #ff0055;
+            animation: pulse-red 2s infinite alternate;
         }
 
-        .app-container {
-            display: flex;
-            height: 100vh;
+        /* Neon Effect for Powered By text */
+        .neon-subtitle {
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+            margin-top: 5px;
+            letter-spacing: 1px;
+            text-shadow: 
+                0 0 5px #fff,
+                0 0 10px #00d4ff,
+                0 0 20px #00d4ff;
+            animation: pulse-blue 2s infinite alternate;
         }
 
-        /* Sidebar Styling */
-        .sidebar {
-            width: var(--sidebar-width);
-            height: 100%;
-            overflow-y: auto;
-            background: #ffffff;
-            border-right: 1px solid #e5e7eb;
-            display: flex;
-            flex-direction: column;
-            z-index: 100;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        @keyframes pulse-red {
+            from { text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #ff0055; }
+            to { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #ff0055, 0 0 70px #ff0055; }
         }
 
+        @keyframes pulse-blue {
+            from { text-shadow: 0 0 5px #fff, 0 0 10px #00d4ff; }
+            to { text-shadow: 0 0 8px #fff, 0 0 15px #00d4ff, 0 0 30px #00d4ff; }
+        }
+
+        /* Sidebar adjustment for neon effect visibility */
         .sidebar-header {
             padding: 20px;
             background: #111;
-            color: white;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .neon-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin: 0;
-            text-shadow: 0 0 10px var(--neon-pink);
-            color: #fff;
-        }
-
-        .neon-subtitle {
-            font-size: 12px;
-            margin: 5px 0 0 0;
-            color: var(--neon-blue);
-            text-shadow: 0 0 5px var(--neon-blue);
-        }
-
-        .controls {
-            padding: 20px;
-            flex-grow: 1;
-        }
-
-        .control-group {
+            border-radius: 8px;
             margin-bottom: 20px;
         }
-
-        .control-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #374151;
-        }
-
-        .section-title {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #9ca3af;
-            margin: 30px 0 15px 0;
-            border-bottom: 1px solid #f3f4f6;
-            padding-bottom: 5px;
-        }
-
-        /* Preview Area */
-        .preview-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            overflow: auto;
-        }
-
-        .canvas-wrapper {
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            background: white;
-            line-height: 0;
-        }
-
-        #renderTarget {
-            max-width: 100%;
-            height: auto !important;
-        }
-
-        /* Responsive Fixes */
-        @media (max-width: 768px) {
-            .app-container { flex-direction: column; }
-            
-            .sidebar {
-                position: fixed;
-                left: 0;
-                bottom: 0;
-                width: 100%;
-                height: 80vh;
-                transform: translateY(100%);
-                border-radius: 24px 24px 0 0;
-                border-right: none;
-                box-shadow: 0 -10px 25px rgba(0,0,0,0.1);
-            }
-
-            .sidebar.active { transform: translateY(0); }
-
-            .mobile-toggle {
-                display: flex !important;
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                z-index: 1000;
-                background: #111;
-                color: white;
-                border: none;
-                padding: 12px 24px;
-                border-radius: 50px;
-                font-weight: 600;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            }
-
-            .preview-area { height: 100vh; padding: 10px; }
-            #renderTarget { width: 90vw !important; height: 90vw !important; }
-        }
-
-        .mobile-toggle { display: none; }
     </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 </head>
 <body>
-
     <div class="app-container">
-        <button id="toggleSettings" class="mobile-toggle" onclick="document.querySelector('.sidebar').classList.toggle('active')">
-            ⚙️ Edit Card
+        <button id="toggleSettings" class="mobile-toggle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1Z"/>
+            </svg>
+            Settings
         </button>
-
         <aside class="sidebar">
             <div class="sidebar-header">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <h1 class="neon-title">Photo Card Pro</h1>
-                        <p class="neon-subtitle">by OSPranto Tech</p>
-                    </div>
-                    <button onclick="document.querySelector('.sidebar').classList.remove('active')" class="mobile-only" style="background:none; border:none; color:white; font-size:24px;">✕</button>
+                <div>
+                    <h1 class="neon-title">Photo Card Generator</h1>
+                    <p class="neon-subtitle">Powered by OSPranto Tech</p>
+                </div>
+                <div style="display: flex; gap: 8px; align-items: center; margin-top: 10px;">
+                    <button id="themeToggle" class="theme-toggle" title="Toggle dark mode">
+                        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/>
+                            <line x1="12" y1="1" x2="12" y2="3"/>
+                            <line x1="12" y1="21" x2="12" y2="23"/>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                            <line x1="1" y1="12" x2="3" y2="12"/>
+                            <line x1="21" y1="12" x2="23" y2="12"/>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                        </svg>
+                        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                    <button id="closeSettings" class="close-btn mobile-only">&times;</button>
                 </div>
             </div>
             
             <div class="controls">
                 <div class="control-group">
-                    <label>Template Style</label>
+                    <label>Select Template</label>
                     <select id="templateSelect"></select>
-                    <p id="templateDesc" style="font-size: 11px; color: #666; margin-top: 4px;"></p>
+                    <p id="templateDesc" class="help-text"></p>
                 </div>
 
-                <div class="section-title">Card Content</div>
+                <div class="section-title">Content</div>
                 <div id="dynamicContent"></div>
 
-                <div class="section-title">Media & Branding</div>
-                
+                <div class="section-title">Media</div>
                 <div class="control-group">
-                    <label>Main Background Image</label>
+                    <label>Main Image</label>
                     <input type="file" id="imageInput" accept="image/*">
-                    <input type="text" id="imageUrlInput" placeholder="Paste image URL..." style="margin-top: 8px; width: 92%;">
+                    <div style="margin: 5px 0; font-size: 12px; text-align: center; color: #666;">OR</div>
+                    <input type="text" id="imageUrlInput" placeholder="Enter Image URL">
                     
-                    <div style="margin-top: 12px; background: #f3f4f6; padding: 10px; border-radius: 8px;">
-                        <label style="font-size: 11px;">Image Zoom</label>
-                        <input type="range" id="imageScaleInput" min="0.1" max="3" step="0.1" value="1" style="width: 100%;">
+                    <div class="image-controls">
+                        <div style="margin-bottom: 8px;">
+                            <label style="font-size: 12px;">Scale</label>
+                            <input type="range" id="imageScaleInput" min="0.1" max="3" step="0.1" value="1" style="width: 100%;">
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <div style="flex: 1;">
+                                <label style="font-size: 12px;">Pos X</label>
+                                <input type="number" id="imageXInput" value="0" style="width: 100%;">
+                            </div>
+                            <div style="flex: 1;">
+                                <label style="font-size: 12px;">Pos Y</label>
+                                <input type="number" id="imageYInput" value="0" style="width: 100%;">
+                            </div>
+                        </div>
+                        <div style="margin-top: 8px;">
+                            <label style="font-size: 12px;">Object Fit</label>
+                            <select id="imageObjectFitInput" style="width: 100%;">
+                                <option value="cover">Cover</option>
+                                <option value="contain">Contain</option>
+                                <option value="fill">Fill</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-
-                <div class="control-group">
-                    <label>Brand Logo</label>
-                    <input type="file" id="logoInput" accept="image/*">
-                </div>
-
-                <div class="section-title">Appearance</div>
                 
-                <div style="display: flex; gap: 10px;">
-                    <div class="control-group" style="flex: 1;">
-                        <label>Accent</label>
-                        <input type="color" id="accentColorInput" value="#D9232D" style="width: 100%; height: 40px; border: none; padding: 0;">
-                    </div>
-                    <div class="control-group" style="flex: 1;">
-                        <label>Text</label>
-                        <input type="color" id="textColorInput" value="#111827" style="width: 100%; height: 40px; border: none; padding: 0;">
-                    </div>
+                <div class="control-group">
+                    <label>Logo</label>
+                    <input type="file" id="logoInput" accept="image/*">
+                    <div style="margin: 5px 0; font-size: 12px; text-align: center; color: #666;">OR</div>
+                    <input type="text" id="logoUrlInput" placeholder="Enter Logo URL">
                 </div>
 
                 <div class="control-group">
-                    <label>Select Font</label>
-                    <select id="fontInput"></select>
+                    <label>Ad Image (Bottom)</label>
+                    <input type="file" id="adImageInput" accept="image/*">
+                    <div style="margin: 5px 0; font-size: 12px; text-align: center; color: #666;">OR</div>
+                    <input type="text" id="adImageUrlInput" placeholder="Enter Ad Image URL">
                 </div>
 
-                <div class="actions" style="margin-top: 40px; padding-bottom: 40px;">
-                    <button id="downloadBtn" style="width: 100%; padding: 16px; background: #111; color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer;">Download HD Image</button>
-                    <button id="resetBtn" style="width: 100%; margin-top: 10px; background: none; border: 1px solid #ddd; padding: 10px; border-radius: 12px; cursor: pointer;">Reset All</button>
+                <div class="section-title">Style</div>
+                <div class="control-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                        <label style="margin-bottom: 0;">Font</label>
+                        <button id="loadSystemFontsBtn" class="text-btn" style="display: none;">Load Installed Fonts</button>
+                    </div>
+                    <select id="fontInput">
+                        <option value="" placeholder>Search fonts...</option>
+                    </select>
                 </div>
+
+                <div class="dual-inputs">
+                    <div class="control-group">
+                        <label>Accent Color</label>
+                        <input type="color" id="accentColorInput" value="#D9232D">
+                    </div>
+                    <div class="control-group">
+                        <label>Background</label>
+                        <input type="color" id="bgColorInput" value="#ffffff">
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label>Text Color</label>
+                    <input type="color" id="textColorInput" value="#111827">
+                </div>
+            </div>
+
+            <div class="actions">
+                <button id="resetBtn" class="secondary-btn">Reset</button>
+                <button id="downloadBtn" class="primary-btn">Download Image</button>
+            </div>
+
+            <div class="footer-credit">
+                <a href="#" target="_blank" rel="noopener noreferrer">
+                    Built with ❤️ by OSPranto Tech
+                </a>
+                <span class="separator">•</span>
+                <span>v1.1.0</span>
             </div>
         </aside>
         
         <main class="preview-area">
             <div class="canvas-wrapper">
-                <div id="renderTarget">
-                    </div>
+                <div id="renderTarget"></div>
             </div>
-            <div style="margin-top: 20px; text-align: center;">
-                <p style="font-size: 13px; color: #6b7280;">Resolution: 1080 x 1080 (1:1)</p>
+            <div class="zoom-controls">
+                <span class="zoom-hint">Preview scaled to fit. Output is 1080x1080.</span>
             </div>
         </main>
     </div>
