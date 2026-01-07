@@ -24,7 +24,9 @@ body {
     background: var(--bg-app);
     color: var(--text);
     height: 100vh;
+    height: 100svh; /* Use short viewport height for mobile browsers */
     overflow: hidden;
+    touch-action: manipulation; /* Improve touch responsiveness */
 }
 
 .app-container {
@@ -243,9 +245,11 @@ input[type="color"]:focus {
         left: 0;
         width: 100%;
         height: 100%;
+        height: 100svh;
         transform: translateY(100%);
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 1000;
+        border-right: none;
     }
 
     .sidebar.open {
@@ -270,7 +274,14 @@ input[type="color"]:focus {
     .preview-area {
         width: 100%;
         height: 100vh;
-        padding: 20px;
+        height: 100svh;
+        padding: 10px;
+        justify-content: flex-start; /* Align to top on mobile to avoid being hidden by keyboard */
+        padding-top: 40px;
+    }
+    
+    .canvas-wrapper {
+        margin-top: 0;
     }
 }
 
@@ -293,6 +304,7 @@ input[type="color"]:focus {
     transform-origin: center center;
     width: 1080px;
     height: 1080px;
+    flex-shrink: 0; /* Prevent shrinking in flex containers */
     /* Initially scaled down via JS */
 }
 

@@ -587,7 +587,8 @@ function fitPreview() {
     const container = wrapper.parentElement;
     if (!container) return;
     
-    const padding = 80; // Total padding
+    const isMobile = window.innerWidth <= 768;
+    const padding = isMobile ? 20 : 80; // Less padding on mobile
     const availableWidth = container.clientWidth - padding;
     const availableHeight = container.clientHeight - padding;
     
