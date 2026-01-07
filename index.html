@@ -12,108 +12,137 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <title>Photo Card Generator</title>
+    <title>Photo Card Generator | OSPranto Tech</title>
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
     <link rel="stylesheet" href="style.css">
     
     <style>
-        /* Mobile Fixes & Responsive Design */
+        /* Mobile-First & Responsive CSS */
         :root {
             --sidebar-width: 350px;
+            --neon-pink: #ff0055;
+            --neon-blue: #00d4ff;
         }
 
         body {
             margin: 0;
+            font-family: 'Poppins', 'Hind Siliguri', sans-serif;
             overflow-x: hidden;
+            background: #f0f2f5;
         }
 
         .app-container {
             display: flex;
             height: 100vh;
-            flex-direction: row;
         }
 
-        /* Sidebar Responsive Styling */
+        /* Sidebar Styling */
         .sidebar {
             width: var(--sidebar-width);
             height: 100%;
             overflow-y: auto;
-            background: #f9fafb;
+            background: #ffffff;
+            border-right: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
             z-index: 100;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        .sidebar-header {
+            padding: 20px;
+            background: #111;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .neon-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 0 0 10px var(--neon-pink);
+            color: #fff;
+        }
+
+        .neon-subtitle {
+            font-size: 12px;
+            margin: 5px 0 0 0;
+            color: var(--neon-blue);
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+
+        .controls {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+
+        .section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #9ca3af;
+            margin: 30px 0 15px 0;
+            border-bottom: 1px solid #f3f4f6;
+            padding-bottom: 5px;
+        }
+
+        /* Preview Area */
         .preview-area {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: #f0f2f5;
             padding: 20px;
-            overflow: hidden;
+            overflow: auto;
         }
 
         .canvas-wrapper {
-            max-width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            background: white;
+            line-height: 0;
         }
 
         #renderTarget {
             max-width: 100%;
-            height: auto !important; /* Mobile glitch fix */
-            aspect-ratio: 1/1;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            height: auto !important;
         }
 
-        /* Neon & Header Styles */
-        .neon-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #fff;
-            text-shadow: 0 0 7px #fff, 0 0 21px #ff0055;
-            animation: pulse-red 2s infinite alternate;
-        }
-
-        .neon-subtitle {
-            font-size: 12px;
-            color: #fff;
-            text-shadow: 0 0 5px #00d4ff;
-            animation: pulse-blue 2s infinite alternate;
-        }
-
-        @keyframes pulse-red { from { opacity: 0.8; } to { opacity: 1; } }
-        @keyframes pulse-blue { from { opacity: 0.7; } to { opacity: 1; } }
-
-        .sidebar-header {
-            padding: 15px;
-            background: #111;
-            border-bottom: 1px solid #333;
-        }
-
-        /* Mobile View (Glitch Fixes) */
+        /* Responsive Fixes */
         @media (max-width: 768px) {
-            .app-container {
-                flex-direction: column;
-            }
-
+            .app-container { flex-direction: column; }
+            
             .sidebar {
                 position: fixed;
                 left: 0;
                 bottom: 0;
                 width: 100%;
-                height: 70vh;
-                transform: translateY(100%); /* Hidden by default */
-                box-shadow: 0 -5px 25px rgba(0,0,0,0.2);
-                border-radius: 20px 20px 0 0;
+                height: 80vh;
+                transform: translateY(100%);
+                border-radius: 24px 24px 0 0;
+                border-right: none;
+                box-shadow: 0 -10px 25px rgba(0,0,0,0.1);
             }
 
-            .sidebar.active {
-                transform: translateY(0);
-            }
+            .sidebar.active { transform: translateY(0); }
 
             .mobile-toggle {
                 display: flex !important;
@@ -121,65 +150,92 @@
                 bottom: 20px;
                 right: 20px;
                 z-index: 1000;
-                background: #ff0055;
+                background: #111;
                 color: white;
-                padding: 12px 20px;
-                border-radius: 50px;
                 border: none;
-                align-items: center;
-                gap: 8px;
-                box-shadow: 0 4px 15px rgba(255, 0, 85, 0.4);
+                padding: 12px 24px;
+                border-radius: 50px;
+                font-weight: 600;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             }
 
-            .preview-area {
-                height: 100vh;
-                padding: 10px;
-            }
-
-            #renderTarget {
-                width: 90vw !important;
-                height: 90vw !important;
-            }
+            .preview-area { height: 100vh; padding: 10px; }
+            #renderTarget { width: 90vw !important; height: 90vw !important; }
         }
 
-        .mobile-only { display: none; }
-        @media (max-width: 768px) { .mobile-only { display: block; } }
+        .mobile-toggle { display: none; }
     </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 </head>
 <body>
+
     <div class="app-container">
         <button id="toggleSettings" class="mobile-toggle" onclick="document.querySelector('.sidebar').classList.toggle('active')">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1Z"/>
-            </svg>
-            Edit Tools
+            ⚙️ Edit Card
         </button>
 
         <aside class="sidebar">
             <div class="sidebar-header">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div>
-                        <h1 class="neon-title">Photo Card</h1>
-                        <p class="neon-subtitle">OSPranto Tech</p>
+                        <h1 class="neon-title">Photo Card Pro</h1>
+                        <p class="neon-subtitle">by OSPranto Tech</p>
                     </div>
-                    <button onclick="document.querySelector('.sidebar').classList.remove('active')" class="mobile-only" style="background:none; border:none; color:white; font-size:30px;">&times;</button>
+                    <button onclick="document.querySelector('.sidebar').classList.remove('active')" class="mobile-only" style="background:none; border:none; color:white; font-size:24px;">✕</button>
                 </div>
             </div>
             
-            <div class="controls" style="padding: 20px;">
+            <div class="controls">
                 <div class="control-group">
-                    <label>Select Template</label>
+                    <label>Template Style</label>
                     <select id="templateSelect"></select>
+                    <p id="templateDesc" style="font-size: 11px; color: #666; margin-top: 4px;"></p>
                 </div>
+
+                <div class="section-title">Card Content</div>
                 <div id="dynamicContent"></div>
+
+                <div class="section-title">Media & Branding</div>
                 
-                <div class="actions" style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
-                    <button id="downloadBtn" class="primary-btn" style="width: 100%; padding: 15px; background: #ff0055; color: white; border: none; border-radius: 8px; font-weight: bold;">Download Image</button>
-                    <button id="resetBtn" class="secondary-btn" style="width: 100%; padding: 10px; border: 1px solid #ccc; background: none; border-radius: 8px;">Reset</button>
+                <div class="control-group">
+                    <label>Main Background Image</label>
+                    <input type="file" id="imageInput" accept="image/*">
+                    <input type="text" id="imageUrlInput" placeholder="Paste image URL..." style="margin-top: 8px; width: 92%;">
+                    
+                    <div style="margin-top: 12px; background: #f3f4f6; padding: 10px; border-radius: 8px;">
+                        <label style="font-size: 11px;">Image Zoom</label>
+                        <input type="range" id="imageScaleInput" min="0.1" max="3" step="0.1" value="1" style="width: 100%;">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Brand Logo</label>
+                    <input type="file" id="logoInput" accept="image/*">
+                </div>
+
+                <div class="section-title">Appearance</div>
+                
+                <div style="display: flex; gap: 10px;">
+                    <div class="control-group" style="flex: 1;">
+                        <label>Accent</label>
+                        <input type="color" id="accentColorInput" value="#D9232D" style="width: 100%; height: 40px; border: none; padding: 0;">
+                    </div>
+                    <div class="control-group" style="flex: 1;">
+                        <label>Text</label>
+                        <input type="color" id="textColorInput" value="#111827" style="width: 100%; height: 40px; border: none; padding: 0;">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Select Font</label>
+                    <select id="fontInput"></select>
+                </div>
+
+                <div class="actions" style="margin-top: 40px; padding-bottom: 40px;">
+                    <button id="downloadBtn" style="width: 100%; padding: 16px; background: #111; color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer;">Download HD Image</button>
+                    <button id="resetBtn" style="width: 100%; margin-top: 10px; background: none; border: 1px solid #ddd; padding: 10px; border-radius: 12px; cursor: pointer;">Reset All</button>
                 </div>
             </div>
         </aside>
@@ -189,7 +245,9 @@
                 <div id="renderTarget">
                     </div>
             </div>
-            <p style="font-size: 12px; color: #666; margin-top: 10px;">Preview matches output (1080x1080)</p>
+            <div style="margin-top: 20px; text-align: center;">
+                <p style="font-size: 13px; color: #6b7280;">Resolution: 1080 x 1080 (1:1)</p>
+            </div>
         </main>
     </div>
 
